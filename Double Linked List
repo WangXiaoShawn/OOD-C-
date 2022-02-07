@@ -1,0 +1,93 @@
+//Double Linked List
+#include <iostream>
+
+using namespace std;
+
+
+class Dnode {//for doubly linked list; double linked list
+public:
+	int value;
+	Dnode* next;
+	Dnode* previous;
+	Dnode(int i) { value = i; next = previous = nullptr; }
+	Dnode() { next = previous = nullptr; }
+
+};
+
+class DLinkedList {
+public:
+	Dnode* head;
+	Dnode* tail;
+	DLinkedList(int n, int m);//n nodes with values in 0 ...m-1
+	void print_F();
+	void print_B();
+	void reverse();
+};
+
+void DLinkedList::reverse() {
+	if (!head || !head->next) return; //0 or 1 node
+	Dnode* p1{ head };
+	while (p1) {
+		swap(p1->next, p1->previous);//swap (i1, i2);
+		p1 = p1->previous;
+	}
+	swap(head, tail);
+}
+
+
+
+DLinkedList::DLinkedList(int n, int m) {
+	for (int i = 0; i < n; ++i) {
+		Dnode* p1 = new Dnode(rand() % m);
+		if (!head) {//empty DLinkedList
+			head = tail = p1;
+		}
+		else {
+			p1->previous = tail;
+			tail->next = p1;
+			tail = p1;
+		}
+	}
+}
+
+
+void DLinkedList::print_F() {
+	Dnode* p1{ head };
+	while (p1) {
+		cout << p1->value << " ";
+		p1 = p1->next;
+	}
+}
+void DLinkedList::print_B() {
+	Dnode* p1{ tail };
+	while (p1) {
+		cout << p1->value << " ";
+		p1 = p1->previous;
+	}
+}
+
+
+
+int main() {
+
+
+
+	DLinkedList DL1{ 12, 20 };
+	DL1.print_F();
+	cout << endl;
+	DL1.print_B();
+	cout << endl;
+
+	DL1.reverse();
+	cout << endl;
+	DL1.print_F();
+	cout << endl;
+	DL1.print_B();
+	cout << endl;
+
+
+
+
+	return 0;
+}
+
